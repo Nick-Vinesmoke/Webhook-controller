@@ -18,7 +18,6 @@ class GUI:
         self.action = False
         self.change = 0
         self.Menu()
-        print(self.webhooks)
         self.win.bind("<MouseWheel>", self.mouse_wheel)
         self.win.mainloop()
     
@@ -115,7 +114,6 @@ class GUI:
 
 
     def ChooseHook(self,url):
-        print(url)
         self.files_list =[]
         self.files = ct.StringVar(value="files")
         str_url = str(url)
@@ -178,9 +176,6 @@ class GUI:
             self.files.set(string[:40])
         else:
             self.files.set(self.files.get()+fileNames)
-        
-        print(self.files_list)
-        print(self.files.get())
 
         
 
