@@ -25,16 +25,17 @@ class GUI:
     def mouse_wheel(self, event):
         self.count = 100
         if event.num == 5 or event.delta == -120:
-            self.change -= 50
-        if event.num == 4 or event.delta == 120:
             self.change += 50
-        for i in range(len(self.webhooks)):
-            self.webhooks[i][0].place(x=25, y=self.count+self.change)
-            self.webhooks[i][2].place(x=35, y=self.count + 45+self.change)
-            self.webhooks[i][1].place(x=35, y=self.count + 10+self.change)
-            self.webhooks[i][3].place(x=380, y=self.count + 10+self.change)
-            self.webhooks[i][4].place(x=280, y=self.count + 10+self.change)
-            self.count = self.count + 150
+        if event.num == 4 or event.delta == 120:
+            self.change -= 50
+        if self.count+self.change <= 100:
+            for i in range(len(self.webhooks)):
+                self.webhooks[i][0].place(x=25, y=self.count+self.change)
+                self.webhooks[i][2].place(x=35, y=self.count + 45+self.change)
+                self.webhooks[i][1].place(x=35, y=self.count + 10+self.change)
+                self.webhooks[i][3].place(x=380, y=self.count + 10+self.change)
+                self.webhooks[i][4].place(x=280, y=self.count + 10+self.change)
+                self.count = self.count + 150
 
     
     def WinProperties(self):
