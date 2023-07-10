@@ -2,7 +2,7 @@ import os
 from file import File
 from encryption import Crypt
 import requests
-import gui
+import json
 
 class Func:
     def AddHook(url):
@@ -59,12 +59,21 @@ class Func:
         index = fileContent.find(webhook_name)
         index += len(webhook_name)
         endIndex = fileContent.find("[/bin/%context%/]",index)
+        if endIndex == -1:
+            File.Write('create',"data\\hooks")
         for i in range(index, endIndex):
             webhook_name+= fileContent[i]
         fileContent = fileContent.replace(webhook_name,"")
         File.Write(fileContent, "data\\hooks", True)
     
-    def ChooseHook(url):
-        pass
-
+    def Send(url,context):
+        payload = {
+            'content': context
+        }
+        response = requests.post(url, data=json.dumps(payload), headers={'Content-Type': 'application/json'})
+        if response.status_code == 204:
+            print('Message sended successfully')
+        else:
+            print(f'failed to send a message with status code: {response.status_code}')
+            print(response.text)
 

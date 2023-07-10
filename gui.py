@@ -53,7 +53,7 @@ class GUI:
                               command=lambda current_url=self.url: [Func.DelHook(current_url.get("0.0", "end")),self.win.destroy(), GUI()], 
                               border_color="#872D26", hover_color='#872D26')
                 self.choose = ct.CTkButton(master=self.win, text="choose", font=('Arial Rounded MT bold', 18), bg_color='#303030',
-                            command=lambda current_url=self.url: [Func.ChooseHook(current_url.get("0.0", "end")),self.win.destroy(), GUI()], width=20, border_color="#50C878", hover_color='#50C878')
+                            command=lambda current_url=self.url: [self.ChooseHook(current_url.get("0.0", "end"))], width=20, border_color="#50C878", hover_color='#50C878')
 
                 self.url.insert("0.0", hooksList[i][1])
                 self.url.configure(state="disabled")
@@ -66,7 +66,32 @@ class GUI:
                 hooks.append(self.url)
 
                 self.count = self.count + 150
-    
+
+
+    def ChooseHook(self,url):
+        str_url = str(url)
+        str_url = str_url.replace('\n','')
+        name = Func.get_webhook_name(str_url)
+        plate = ct.CTkFrame(master=self.win, width=500, height=600, fg_color="#242424")
+        plate.place(x=0, y=0)
+        uperFame = ct.CTkFrame(master=self.win, width=500, height=70, fg_color="#303030")
+        uperFame.place(x=0, y=0)
+        middleFame = ct.CTkFrame(master=self.win, width=500, height=500, fg_color="#303030")
+        middleFame.place(x=0, y=100)
+        header = ct.CTkLabel(master=self.win, text=name, font=('Arial Rounded MT bold', 34), bg_color='#303030', text_color='#14A5AE')
+        header.place(relx=0.5, y=30, anchor=CENTER)
+        text = ct.CTkTextbox(master=self.win, width=460, height=360, fg_color="#404040", bg_color='#303030', border_color="#14A5AE", border_width=2)
+        text.place(x=20, y=120)
+        send= ct.CTkButton(master=self.win, text="send", font=('Arial Rounded MT bold', 24), bg_color='#303030',
+                            command=lambda: [Func.Send(str_url,text.get("0.0", "end")),plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy()], width=20, border_color="#50C878", hover_color='#50C878')
+
+        close = ct.CTkButton(master=self.win, text="⨉", font=('Arial Rounded MT bold', 18),width=25,height=30,corner_radius = 10, bg_color='#303030',
+                          command=lambda: [plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy()],
+                          border_color="#872D26", hover_color='#872D26')
+        close.place(x=450, y=5)
+        send.place(x=205, y=555)
+
+
     def AddHook(self):
         if not self.action:
             self.action = True
@@ -87,7 +112,3 @@ class GUI:
             apply.place(x=450, y=35)
     def EndAction(self):
         self.action = False
-
-
-if __name__ == "__main__":
-    GUI()
