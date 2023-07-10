@@ -21,11 +21,11 @@ class GUI:
         self.win.mainloop()
     
     def WinProperties(self):
-        self.win.geometry("500x600+560+240")  # place and scale
+        self.win.geometry("500x600+560+240")  
         self.win.minsize(500,300)
-        self.win.title("Webhook-Controller")  # name of the window
-        self.win.resizable(False, False)  # deformation of the window
-        self.win.iconbitmap(self.icon)  # icon
+        self.win.title("Webhook-Controller") 
+        self.win.resizable(False, False)  
+        self.win.iconbitmap(self.icon)  
         ct.set_appearance_mode('dark')
         ct.set_default_color_theme('green')
 
