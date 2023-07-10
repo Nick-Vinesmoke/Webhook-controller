@@ -15,7 +15,7 @@ class Func:
                 webhook_name = 'error'
             key = Func.GetKey()
             enc_url = Crypt.Encrypt(str_url,key)
-            data = webhook_name+'[/hook/%context%/]'+enc_url
+            data = webhook_name+'[/hook/%context%/]'+enc_url.decode("ascii")
             File.Add(data,"data\\hooks")
         else:
             print("not a webhook")
