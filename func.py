@@ -6,10 +6,13 @@ import requests
 class Func:
     def AddHook(url):
         str_url = str(url)
-        if str_url.find("https://discord.com/api/webhooks/"):
+        if not str_url.find("https://discord.com/api/webhooks/"):
             if not os.path.exists("data\\hooks"):
                 File.Write('create',"data\\hooks")
-            webhook_name = Func.get_webhook_name(str_url)
+            try:
+                webhook_name = Func.get_webhook_name(str_url)
+            except:
+                webhook_name = 'error'
             key = Func.GetKey()
             enc_url = Crypt.Encrypt(str_url,key)
             data = webhook_name+'[/hook/%context%/]'+enc_url
