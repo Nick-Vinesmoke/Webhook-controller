@@ -2,6 +2,7 @@ import os
 from file import File
 from encryption import Crypt
 import requests
+import gui
 
 class Func:
     def AddHook(url):
@@ -35,29 +36,35 @@ class Func:
     
     def GetHooks():
         hooksList = File.Read("data\\hooks")
-        for i in range(len(hooksList)):
-            hooksList[i] = hooksList[i].split("[/hook/%context%/]")
-        key = Func.GetKey()
-        for i in range(len(hooksList)):
-            hooksList[i][1]= Crypt.Decrypt(hooksList[i][1],key)
-        return hooksList
+        if hooksList != 'null':
+            for i in range(len(hooksList)):
+                hooksList[i] = hooksList[i].split("[/hook/%context%/]")
+            key = Func.GetKey()
+            for i in range(len(hooksList)):
+                hooksList[i][1]= Crypt.Decrypt(hooksList[i][1],key)
+            return hooksList
+        return 'null'
     
     def DelHook(url):
-            str_url = str(url)
-            str_url = str_url.replace('\n','')
-            try:
-                webhook_name = Func.get_webhook_name(str_url)
-            except:
-                webhook_name = 'error'
-            webhook_name = '[/bin/%context%/]'+webhook_name+'[/hook/%context%/]'
-            with open("data\\hooks", 'rb') as file:
-                fileContent = file.read()
-            fileContent = fileContent.decode("ascii")
-            index = fileContent.find(webhook_name)
-            index += len(webhook_name)
-            endIndex = fileContent.find("[/bin/%context%/]",index)
-            for i in range(index, endIndex):
-                webhook_name+= fileContent[i]
-            fileContent = fileContent.replace(webhook_name,"")
-            File.Write(fileContent, "data\\hooks", True)
+        str_url = str(url)
+        str_url = str_url.replace('\n','')
+        try:
+            webhook_name = Func.get_webhook_name(str_url)
+        except:
+            webhook_name = 'error'
+        webhook_name = '[/bin/%context%/]'+webhook_name+'[/hook/%context%/]'
+        with open("data\\hooks", 'rb') as file:
+            fileContent = file.read()
+        fileContent = fileContent.decode("ascii")
+        index = fileContent.find(webhook_name)
+        index += len(webhook_name)
+        endIndex = fileContent.find("[/bin/%context%/]",index)
+        for i in range(index, endIndex):
+            webhook_name+= fileContent[i]
+        fileContent = fileContent.replace(webhook_name,"")
+        File.Write(fileContent, "data\\hooks", True)
+    
+    def ChooseHook(url):
+        pass
+
 

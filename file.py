@@ -21,7 +21,10 @@ class File:
                 data = file.read()
                 data = data.decode("utf-8")
                 list = data.split("[/bin/%context%/]")
-                list.remove('')
+                try:
+                    list.remove('')
+                except:
+                    pass
                 return list
-        except Exception as error:
+        except:
             return "null"
