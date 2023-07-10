@@ -83,10 +83,10 @@ class GUI:
         middleFame.place(x=0, y=100)
         header = ct.CTkLabel(master=self.win, text=name, font=('Arial Rounded MT bold', 34), bg_color='#303030', text_color='#14A5AE')
         header.place(relx=0.5, y=30, anchor=CENTER)
-        text = ct.CTkTextbox(master=self.win, width=460, height=360, fg_color="#404040", bg_color='#303030', border_color="#14A5AE", border_width=2)
-        text.place(x=20, y=120)
+        self.text = ct.CTkTextbox(master=self.win, width=460, height=360, fg_color="#404040", bg_color='#303030', border_color="#14A5AE", border_width=2)
+        self.text.place(x=20, y=120)
         send= ct.CTkButton(master=self.win, text="send", font=('Arial Rounded MT bold', 24), bg_color='#242424',
-                            command=lambda: [Func.Send(str_url,text.get("0.0", "end"),self.files_list),plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy(),addFile.destroy(),files.destroy()], width=20, border_color="#50C878", hover_color='#50C878')
+                            command=lambda: [Func.Send(str_url,self.text.get("0.0", "end"),self.files_list),self.CleanFiles()], width=20, border_color="#50C878", hover_color='#50C878')
         
         addFile= ct.CTkButton(master=self.win, text="Add file", font=('Arial Rounded MT bold', 18), bg_color='#303030',
                             command=lambda: [self.LoadFile()], width=20, border_color="#14A5AE", hover_color='#303030',corner_radius=8)
@@ -94,12 +94,25 @@ class GUI:
         files = ct.CTkLabel(master=self.win, textvariable = self.files ,width=400, bg_color='#303030', fg_color="#262626",font=('Arial Rounded MT bold', 18),anchor = 'w', corner_radius=6)
 
         close = ct.CTkButton(master=self.win, text="⨉", font=('Arial Rounded MT bold', 18),width=25,height=30,corner_radius = 10, bg_color='#303030',
-                          command=lambda: [plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy(),addFile.destroy(),files.destroy()],
+                          command=lambda: [plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),self.text.destroy(),send.destroy(),addFile.destroy(),files.destroy()],
                           border_color="#872D26", hover_color='#872D26')
         close.place(x=450, y=5)
         addFile.place(x=5, y=503)
         files.place(x=93, y=505)
         send.place(x=205, y=557)
+    
+
+    def CleanFiles(self):
+        self.files_list =[]
+        self.files.set("files")
+        self.text.insert("0.0", "")
+        fame = ct.CTkFrame(master=self.win, width=300, height=100, fg_color="#303030", bg_color='#404040',corner_radius=30,border_color="#14A5AE", border_width=2)
+        fame.place(relx=0.5,rely=0.5, anchor=CENTER)
+        header = ct.CTkLabel(master=self.win, text="message sent", font=('Arial Rounded MT bold', 34), bg_color='#303030', text_color='#14A5AE')
+        header.place(relx=0.5, y=280, anchor=CENTER)
+        ok = ct.CTkButton(master=self.win, text="OK", font=('Arial Rounded MT bold', 24), bg_color='#303030',
+                            command=lambda: [fame.destroy(),header.destroy(),ok.destroy()], width=20, border_color="#50C878", hover_color='#50C878')
+        ok.place(relx=0.5, y=325, anchor=CENTER)
 
     def LoadFile(self):
         filepaths = filedialog.askopenfilenames(title="choose file")
@@ -135,7 +148,7 @@ class GUI:
             url = ct.CTkEntry(master=self.win, width=400, bg_color='#303030', fg_color="#262626",font=('Arial Rounded MT bold', 18), placeholder_text="WebHook URL")
             url.place(x=10, y=35)
             apply = ct.CTkButton(master=self.win, text="⩗", font=('Arial Rounded MT bold', 18),width=35,height=30,corner_radius = 10, bg_color='#303030',
-                          command=lambda: [Func.AddHook(url.get()),self.win.destroy(), GUI(), url.destroy(),fame.destroy(), title.destroy(), close.destroy(),apply.destroy(),self.EndAction()],
+                          command=lambda: [Func.AddHook(url.get()),self.win.destroy(), GUI()],
                           border_color="#50C878", hover_color='#50C878')
         
             close = ct.CTkButton(master=self.win, text="⨉", font=('Arial Rounded MT bold', 18),width=35,height=30,corner_radius = 10, bg_color='#303030',
