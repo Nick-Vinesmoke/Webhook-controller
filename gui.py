@@ -105,7 +105,7 @@ class GUI:
     def CleanFiles(self):
         self.files_list =[]
         self.files.set("files")
-        self.text.insert("0.0", "")
+        self.text.insert("0.0", " ")
         fame = ct.CTkFrame(master=self.win, width=300, height=100, fg_color="#303030", bg_color='#404040',corner_radius=30,border_color="#14A5AE", border_width=2)
         fame.place(relx=0.5,rely=0.5, anchor=CENTER)
         header = ct.CTkLabel(master=self.win, text="message sent", font=('Arial Rounded MT bold', 34), bg_color='#303030', text_color='#14A5AE')
