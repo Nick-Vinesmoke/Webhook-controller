@@ -17,9 +17,6 @@ class GUI:
         self.count = 100
         self.action = False
         self.Menu()
-        
-
-
         self.win.mainloop()
     
     def WinProperties(self):
@@ -33,6 +30,7 @@ class GUI:
         ct.set_default_color_theme('green')
 
     def Menu(self):
+        self.LoadHooks()
         self.uperFame = ct.CTkFrame(master=self.win, width=500, height=70, fg_color="#303030")
         self.uperFame.place(x=0, y=0)
         self.header = ct.CTkLabel(master=self.win, text="Webhook-Controller", font=('Arial Rounded MT bold', 30), bg_color='#303030', text_color='#14A5AE')
@@ -40,7 +38,6 @@ class GUI:
         self.addNew = ct.CTkButton(master=self.win, text="+", font=('Arial Rounded MT bold', 45), width=65, bg_color='#303030',border_color='#14A5AE',
                        command=lambda: [self.AddHook()])
         self.addNew.place(x=5, y=5)
-        self.LoadHooks()
     
     def LoadHooks(self):
         hooksList = Func.GetHooks()
