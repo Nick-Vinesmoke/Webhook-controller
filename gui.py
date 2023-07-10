@@ -47,11 +47,11 @@ class GUI:
             url = ct.CTkEntry(master=self.win, width=400, bg_color='#303030', fg_color="#262626",font=('Arial Rounded MT bold', 18), placeholder_text="WebHook URL")
             url.place(x=10, y=35)
             apply = ct.CTkButton(master=self.win, text="⩗", font=('Arial Rounded MT bold', 18),width=35,height=30,corner_radius = 10, bg_color='#303030',
-                          command=lambda: [fame.destroy(), title.destroy(), close.destroy(), url.destroy(),apply.destroy(),self.EndAction()],
+                          command=lambda: [fame.destroy(), title.destroy(), close.destroy(),apply.destroy(),self.EndAction(), Func.AddHook(url.get()), url.destroy()],
                           border_color="#50C878", hover_color='#50C878')
         
             close = ct.CTkButton(master=self.win, text="⨉", font=('Arial Rounded MT bold', 18),width=35,height=30,corner_radius = 10, bg_color='#303030',
-                          command=lambda: [fame.destroy(), title.destroy(), close.destroy(), url.destroy(), apply.destroy(), self.EndAction(), Func.AddHook(url.get())],
+                          command=lambda: [fame.destroy(), title.destroy(), close.destroy(), url.destroy(), apply.destroy(), self.EndAction()],
                           border_color="#872D26", hover_color='#872D26')
             close.place(x=450, y=5)
             apply.place(x=450, y=35)
