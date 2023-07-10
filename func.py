@@ -1,3 +1,8 @@
+#Webhook-controller
+#https://github.com/Nick-Vinesmoke/Webhook-controller
+#https://github.com/Nick-Vinesmoke
+#by Nick-Vinesmoke
+
 import os
 from file import File
 from encryption import Crypt

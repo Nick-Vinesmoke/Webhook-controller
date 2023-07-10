@@ -1,3 +1,8 @@
+#Webhook-controller
+#https://github.com/Nick-Vinesmoke/Webhook-controller
+#https://github.com/Nick-Vinesmoke
+#by Nick-Vinesmoke
+
 class File:
     def Write (contexts,FILENAME, ready = False):
         with open(FILENAME, 'wb') as file:
