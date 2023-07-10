@@ -6,6 +6,7 @@
 from tkinter import *
 import customtkinter as ct
 from func import Func
+from tkinter import filedialog
 
 class GUI:
     def __init__(self) -> None:
@@ -69,6 +70,8 @@ class GUI:
 
 
     def ChooseHook(self,url):
+        self.files_list =[]
+        self.files = ct.StringVar(value="files")
         str_url = str(url)
         str_url = str_url.replace('\n','')
         name = Func.get_webhook_name(str_url)
@@ -76,21 +79,51 @@ class GUI:
         plate.place(x=0, y=0)
         uperFame = ct.CTkFrame(master=self.win, width=500, height=70, fg_color="#303030")
         uperFame.place(x=0, y=0)
-        middleFame = ct.CTkFrame(master=self.win, width=500, height=500, fg_color="#303030")
+        middleFame = ct.CTkFrame(master=self.win, width=500, height=450, fg_color="#303030")
         middleFame.place(x=0, y=100)
         header = ct.CTkLabel(master=self.win, text=name, font=('Arial Rounded MT bold', 34), bg_color='#303030', text_color='#14A5AE')
         header.place(relx=0.5, y=30, anchor=CENTER)
         text = ct.CTkTextbox(master=self.win, width=460, height=360, fg_color="#404040", bg_color='#303030', border_color="#14A5AE", border_width=2)
         text.place(x=20, y=120)
-        send= ct.CTkButton(master=self.win, text="send", font=('Arial Rounded MT bold', 24), bg_color='#303030',
-                            command=lambda: [Func.Send(str_url,text.get("0.0", "end")),plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy()], width=20, border_color="#50C878", hover_color='#50C878')
+        send= ct.CTkButton(master=self.win, text="send", font=('Arial Rounded MT bold', 24), bg_color='#242424',
+                            command=lambda: [Func.Send(str_url,text.get("0.0", "end"),self.files_list),plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy(),addFile.destroy(),files.destroy()], width=20, border_color="#50C878", hover_color='#50C878')
+        
+        addFile= ct.CTkButton(master=self.win, text="Add file", font=('Arial Rounded MT bold', 18), bg_color='#303030',
+                            command=lambda: [self.LoadFile()], width=20, border_color="#14A5AE", hover_color='#303030',corner_radius=8)
+        
+        files = ct.CTkLabel(master=self.win, textvariable = self.files ,width=400, bg_color='#303030', fg_color="#262626",font=('Arial Rounded MT bold', 18),anchor = 'w', corner_radius=6)
 
         close = ct.CTkButton(master=self.win, text="⨉", font=('Arial Rounded MT bold', 18),width=25,height=30,corner_radius = 10, bg_color='#303030',
-                          command=lambda: [plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy()],
+                          command=lambda: [plate.destroy(), close.destroy(),uperFame.destroy(),header.destroy(),middleFame.destroy(),text.destroy(),send.destroy(),addFile.destroy(),files.destroy()],
                           border_color="#872D26", hover_color='#872D26')
         close.place(x=450, y=5)
-        send.place(x=205, y=555)
+        addFile.place(x=5, y=503)
+        files.place(x=93, y=505)
+        send.place(x=205, y=557)
 
+    def LoadFile(self):
+        filepaths = filedialog.askopenfilenames(title="choose file")
+        listpaths = list(filepaths)
+        self.files_list = list(self.files_list+listpaths)
+
+        fileNames = ''
+        for files in self.files_list:
+            index = files.rfind("/")
+            files = files[index+1:]
+            fileNames = fileNames+files+', '
+
+        if self.files.get() == 'files':
+            self.files.set('')
+        if len(self.files.get()+fileNames) > 40:
+            string = self.files.get()+fileNames
+            self.files.set(string[:40])
+        else:
+            self.files.set(self.files.get()+fileNames)
+        
+        print(self.files_list)
+        print(self.files.get())
+
+        
 
     def AddHook(self):
         if not self.action:

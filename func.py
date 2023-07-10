@@ -66,14 +66,19 @@ class Func:
         fileContent = fileContent.replace(webhook_name,"")
         File.Write(fileContent, "data\\hooks", True)
     
-    def Send(url,context):
+    def Send(url,context,file_paths):
         payload = {
             'content': context
         }
-        response = requests.post(url, data=json.dumps(payload), headers={'Content-Type': 'application/json'})
-        if response.status_code == 204:
-            print('Message sended successfully')
-        else:
-            print(f'failed to send a message with status code: {response.status_code}')
-            print(response.text)
 
+        files = []
+        for file_path in file_paths:
+            file = open(file_path, 'rb')
+            files.append(('file', file))
+
+        response = requests.post(url, data=payload, files=files)
+
+        if response.status_code == 204:
+            print('Message and files sent successfully.')
+        else:
+            print('Error sending message and files:', response.text)
