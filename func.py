@@ -70,15 +70,21 @@ class Func:
         payload = {
             'content': context
         }
-
-        files = []
-        for file_path in file_paths:
-            file = open(file_path, 'rb')
-            files.append(('file', file))
-
-        response = requests.post(url, data=payload, files=files)
+        response = requests.post(url, data=json.dumps(payload), headers={'Content-Type': 'application/json'})
 
         if response.status_code == 204:
             print('Message and files sent successfully.')
         else:
             print('Error sending message and files:', response.text)
+
+        for file in file_paths:
+            with open(file, 'rb') as file:
+                files = {'file': file}
+                response = requests.post(url, files=files)
+        
+            if response.status_code == 200:
+                print('File sent successfully.')
+            else:
+                print('Error sending file:', response.text)
+
+        
