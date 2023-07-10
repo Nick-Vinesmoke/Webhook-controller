@@ -7,9 +7,15 @@ class Crypt:
         return key
     
     def Encrypt(line, key):
-        pass
+        fernet = Fernet(key)
+        enc_line = fernet.encrypt(line.encode())
+        return enc_line
+
     def Decrypt(line, key):
-        pass
+        fernet = Fernet(key)
+        dec_line = fernet.decrypt(line).decode()
+        return dec_line
+        
     def Encrypt64(line):
         line_bytes = bytes(line, "ascii")
         base64_bytes = base64.b64encode(line_bytes)

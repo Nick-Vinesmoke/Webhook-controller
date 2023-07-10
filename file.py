@@ -2,7 +2,8 @@ class File:
     def Write (contexts,FILENAME):
         with open(FILENAME, 'wb') as file:
             if isinstance(contexts, str):
-                file.write(bytes('[/bin/%context%/]'+contexts, "UTF-8"))
+                if contexts != "create":
+                    file.write(bytes('[/bin/%context%/]'+contexts, "UTF-8"))
             else:
                 for context in contexts:
                     file.write(bytes('[/bin/%context%/]'+context, "UTF-8"))
