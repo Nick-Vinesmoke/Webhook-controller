@@ -32,3 +32,16 @@ class Func:
             return data.get('name', 'Webhook Name Not Found')
         else:
             return 'Error'
+    
+    def GetHooks():
+        hooksList = File.Read("data\\hooks")
+        for i in range(len(hooksList)):
+            hooksList[i] = hooksList[i].split("[/hook/%context%/]")
+        key = Func.GetKey()
+        for i in range(len(hooksList)):
+            hooksList[i][1]= Crypt.Decrypt(hooksList[i][1],key)
+        return hooksList
+    
+    def DelHook(url):
+            str_url = str(url)
+
