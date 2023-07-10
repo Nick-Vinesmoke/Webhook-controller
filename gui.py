@@ -16,8 +16,26 @@ class GUI:
         self.WinProperties()
         self.count = 100
         self.action = False
+        self.change = 0
         self.Menu()
+        print(self.webhooks)
+        self.win.bind("<MouseWheel>", self.mouse_wheel)
         self.win.mainloop()
+    
+    def mouse_wheel(self, event):
+        self.count = 100
+        if event.num == 5 or event.delta == -120:
+            self.change -= 50
+        if event.num == 4 or event.delta == 120:
+            self.change += 50
+        for i in range(len(self.webhooks)):
+            self.webhooks[i][0].place(x=25, y=self.count+self.change)
+            self.webhooks[i][2].place(x=35, y=self.count + 45+self.change)
+            self.webhooks[i][1].place(x=35, y=self.count + 10+self.change)
+            self.webhooks[i][3].place(x=380, y=self.count + 10+self.change)
+            self.webhooks[i][4].place(x=280, y=self.count + 10+self.change)
+            self.count = self.count + 150
+
     
     def WinProperties(self):
         self.win.geometry("500x600+560+240")  
@@ -43,6 +61,34 @@ class GUI:
         hooksList = Func.GetHooks()
         if hooksList!= 'null':
             hooks = []
+            self.webhooks = []
+            for i in range(len(hooksList)):
+                self.webhook = []
+                self.webhook.append(ct.CTkFrame(master=self.win, width=450, height=120, fg_color="#303030", border_color="#14A5AE", border_width=2))
+                self.webhook.append(ct.CTkLabel(master=self.win, text=hooksList[i][0], font=('Arial Rounded MT bold', 24), bg_color='#303030', text_color='#14A5AE'))
+                self.webhook.append(ct.CTkTextbox(master=self.win, width=430, height=65, fg_color="#404040", bg_color='#303030'))
+                self.webhook.append(ct.CTkButton(master=self.win, text="delete", font=('Arial Rounded MT bold', 18), width=30, bg_color='#303030',
+                              command=lambda current_url=self.webhook[2]: [Func.DelHook(current_url.get("0.0", "end")),self.win.destroy(), GUI()], 
+                              border_color="#872D26", hover_color='#872D26'))
+                self.webhook.append(ct.CTkButton(master=self.win, text="choose", font=('Arial Rounded MT bold', 18), bg_color='#303030',
+                            command=lambda current_url=self.webhook[2]: [self.ChooseHook(current_url.get("0.0", "end"))], width=20, border_color="#50C878", hover_color='#50C878'))
+
+                self.webhook[2].insert("0.0", hooksList[i][1])
+                self.webhook[2].configure(state="disabled")
+                self.webhook[0].place(x=25, y=self.count)
+                self.webhook[2].place(x=35, y=self.count + 45)
+                self.webhook[1].place(x=35, y=self.count + 10)
+                self.webhook[3].place(x=380, y=self.count + 10)
+                self.webhook[4].place(x=280, y=self.count + 10)
+                self.count = self.count + 150
+
+                self.webhooks.append(self.webhook)
+                hooks.append(self.webhook[2])
+                
+        '''
+        hooksList = Func.GetHooks()
+        if hooksList!= 'null':
+            hooks = []
             for i in range(len(hooksList)):
                 self.plate1 = ct.CTkFrame(master=self.win, width=450, height=120, fg_color="#303030", border_color="#14A5AE", border_width=2)
                 self.title = ct.CTkLabel(master=self.win, text=hooksList[i][0], font=('Arial Rounded MT bold', 24), bg_color='#303030', text_color='#14A5AE')
@@ -64,9 +110,11 @@ class GUI:
                 hooks.append(self.url)
 
                 self.count = self.count + 150
+                '''
 
 
     def ChooseHook(self,url):
+        print(url)
         self.files_list =[]
         self.files = ct.StringVar(value="files")
         str_url = str(url)
