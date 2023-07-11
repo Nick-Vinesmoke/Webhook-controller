@@ -53,23 +53,16 @@ class Func:
     def DelHook(url):
         str_url = str(url)
         str_url = str_url.replace('\n','')
-        try:
-            webhook_name = Func.get_webhook_name(str_url)
-        except:
-            webhook_name = 'error'
-        webhook_name = '[/bin/%context%/]'+webhook_name+'[/hook/%context%/]'
-        with open("data\\hooks", 'rb') as file:
-            fileContent = file.read()
-        fileContent = fileContent.decode("ascii")
-        index = fileContent.find(webhook_name)
-        index += len(webhook_name)
-        endIndex = fileContent.find("[/bin/%context%/]",index)
-        if endIndex == -1:
-            File.Write('create',"data\\hooks")
-        for i in range(index, endIndex):
-            webhook_name+= fileContent[i]
-        fileContent = fileContent.replace(webhook_name,"")
-        File.Write(fileContent, "data\\hooks", True)
+        dataList = Func.GetHooks()
+        key = Func.GetKey()
+        string= ''
+        for x in range(len(dataList)):
+            print(dataList[x][1]+'?='+str_url)
+            if dataList[x][1] != str_url:
+                print(dataList[x][1]+'!='+str_url)
+                enc_url = Crypt.Encrypt(dataList[x][1],key)
+                string +='[/bin/%context%/]'+dataList[x][0]+"[/hook/%context%/]"+enc_url.decode("ascii")
+        File.Write(string, "data\\hooks", True)
     
     def Send(url,context,file_paths):
         payload = {
