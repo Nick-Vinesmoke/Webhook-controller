@@ -18,8 +18,10 @@ class GUI:
         self.action = False
         self.change = 0
         self.minPos = 0
+        self.scroll = True
         self.Menu()
-        self.win.bind("<MouseWheel>", self.mouse_wheel)
+        if self.scroll:
+            self.win.bind("<MouseWheel>", self.mouse_wheel)
         self.win.mainloop()
     
     def mouse_wheel(self, event):
@@ -91,39 +93,11 @@ class GUI:
                     self.webhooks.append(self.webhook)
                     hooks.append(self.webhook[2])
                 
-                self.minPos = self.count * -1 + (self.count - i*100)
-                print(self.count)
+                self.minPos = self.count * -1 + self.count -(self.count-150*4 - 100)
+                if self.count < 600:
+                    self.scroll = False
             except Exception as e:
                 print(e)
-
-            
-                
-        '''
-        hooksList = Func.GetHooks()
-        if hooksList!= 'null':
-            hooks = []
-            for i in range(len(hooksList)):
-                self.plate1 = ct.CTkFrame(master=self.win, width=450, height=120, fg_color="#303030", border_color="#14A5AE", border_width=2)
-                self.title = ct.CTkLabel(master=self.win, text=hooksList[i][0], font=('Arial Rounded MT bold', 24), bg_color='#303030', text_color='#14A5AE')
-                self.url = ct.CTkTextbox(master=self.win, width=430, height=65, fg_color="#404040", bg_color='#303030')
-                self.delete = ct.CTkButton(master=self.win, text="delete", font=('Arial Rounded MT bold', 18), width=30, bg_color='#303030',
-                              command=lambda current_url=self.url: [Func.DelHook(current_url.get("0.0", "end")),self.win.destroy(), GUI()], 
-                              border_color="#872D26", hover_color='#872D26')
-                self.choose = ct.CTkButton(master=self.win, text="choose", font=('Arial Rounded MT bold', 18), bg_color='#303030',
-                            command=lambda current_url=self.url: [self.ChooseHook(current_url.get("0.0", "end"))], width=20, border_color="#50C878", hover_color='#50C878')
-
-                self.url.insert("0.0", hooksList[i][1])
-                self.url.configure(state="disabled")
-                self.plate1.place(x=25, y=self.count)
-                self.url.place(x=35, y=self.count + 45)
-                self.title.place(x=35, y=self.count + 10)
-                self.delete.place(x=380, y=self.count + 10)
-                self.choose.place(x=280, y=self.count + 10)
-
-                hooks.append(self.url)
-
-                self.count = self.count + 150
-                '''
 
 
     def ChooseHook(self,url):
