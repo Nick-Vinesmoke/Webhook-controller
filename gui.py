@@ -17,6 +17,7 @@ class GUI:
         self.count = 100
         self.action = False
         self.change = 0
+        self.minPos = 0
         self.Menu()
         self.win.bind("<MouseWheel>", self.mouse_wheel)
         self.win.mainloop()
@@ -24,10 +25,11 @@ class GUI:
     def mouse_wheel(self, event):
         self.count = 100
         if event.num == 5 or event.delta == -120:
-            self.change += 50
-        if event.num == 4 or event.delta == 120:
             self.change -= 50
-        if self.count+self.change <= 100:
+        if event.num == 4 or event.delta == 120:
+            self.change += 50
+        if self.count+self.change <= 100 and self.count+self.change >=self.minPos:
+            print(self.count+self.change)
             for i in range(len(self.webhooks)):
                 self.webhooks[i][0].place(x=25, y=self.count+self.change)
                 self.webhooks[i][2].place(x=35, y=self.count + 45+self.change)
@@ -84,6 +86,9 @@ class GUI:
 
                 self.webhooks.append(self.webhook)
                 hooks.append(self.webhook[2])
+
+            self.minPos = self.count * -1 + (self.count - i*100)
+            print(self.count)
                 
         '''
         hooksList = Func.GetHooks()
