@@ -1,5 +1,5 @@
 <a id ="up"></a>
-![logo](images\logo.png)
+![logo](images/logo.png)
 
 >### Webhook-controller
 > 🌐The prog for controlling discord webhooks written on python
@@ -19,26 +19,26 @@
 
 User-friendly interface in the form of a list(it can contain any number of webhooks)
 
-![1](images\Screenshot_1.png)
+![1](images/Screenshot_1.png)
 
 Сonvenient addition of a webhook
 
-![2](images\Screenshot_2.png)
+![2](images/Screenshot_2.png)
 
 Easily use or remove unwanted webhooks
 
-![3](images\Screenshot_3.png)
+![3](images/Screenshot_3.png)
 
 fast work and sending
 
-![4](images\Screenshot_4.png)
+![4](images/Screenshot_4.png)
 
 ---
 
 ### 🔐Secure
 All saved webhooks are stored locally encrypted with 2 keys and 3 ways
 
-![5](images\Screenshot_5.png)
+![5](images/Screenshot_5.png)
 
 ---
 
@@ -58,17 +58,17 @@ change path to customtkinter in `to exe.bat` and run `to exe.bat`
 ---
 ### ❌Builder errors
 
-If you have error like this:
+If you have an error like this:
 
 ![error](images/error.png)
 
 How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal-external-command/)
 
-If you have error like this:
+If you have an error like this:
 
 ![error](images/error1.png)
 
-input in cmd `pip uninstall typing` and than input `y`
+input in cmd `pip uninstall typing` and then input `y`
 
 
 ---
