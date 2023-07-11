@@ -8,6 +8,7 @@ from file import File
 from encryption import Crypt
 import requests
 import json
+import webbrowser
 
 class Func:
     def AddHook(url):
@@ -84,5 +85,8 @@ class Func:
                 print('File sent successfully.')
             else:
                 print('Error sending file:', response.text)
+    
+    def Git():
+        webbrowser.open('https://github.com/Nick-Vinesmoke', new=2)
 
         

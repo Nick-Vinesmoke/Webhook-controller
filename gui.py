@@ -7,12 +7,14 @@ from tkinter import *
 import customtkinter as ct
 from func import Func
 from tkinter import filedialog
+from PIL import Image
 
 class GUI:
     def __init__(self) -> None:
         self.win = ct.CTk()
         self.setTheme = ct.StringVar(value="dark")
         self.icon = "resources\\icon.ico"
+        self.gitimg = "resources\\git.png"
         self.WinProperties()
         self.count = 100
         self.action = False
@@ -63,6 +65,9 @@ class GUI:
         self.addNew = ct.CTkButton(master=self.win, text="+", font=('Arial Rounded MT bold', 45), width=65, bg_color='#303030',border_color='#14A5AE',
                        command=lambda: [self.AddHook()])
         self.addNew.place(x=5, y=5)
+        gitimage = ct.CTkImage(light_image=Image.open(self.gitimg),dark_image=Image.open(self.gitimg),size=(30, 30))
+        self.gitButton = ct.CTkButton(master=self.win,text = '',image=gitimage,font=('Arial Rounded MT bold', 24),width=35,height=30,command=Func.Git,corner_radius = 8, bg_color='#303030')
+        self.gitButton.place(x=440, y=25)
     
     def LoadHooks(self):
         hooksList = Func.GetHooks()
